@@ -42,6 +42,13 @@ final public class Store<State: FluxState>: ObservableObject {
         }
     }
     
+    public func dispatch(action: Action, group: DispatchGroup) {
+        DispatchQueue.main.async {
+            self.dispatchFunction(action)
+            group.leave()
+        }
+    }
+    
     private func _dispatch(action: Action) {
         state = reducer(state, action)
     }
